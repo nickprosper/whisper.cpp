@@ -4969,9 +4969,10 @@ int whisper_full_with_state(
     if (n_samples > 0) {
         // compute log mel spectrogram
         if (params.speed_up) {
-            // TODO: Replace PV with more advanced algorithm
-            WHISPER_LOG_ERROR("%s: failed to compute log mel spectrogram\n", __func__);
-            return -1;
+            if (whisper_pcm_to_mel_phase_vocoder_with_state(ctx, state, samples, n_samples, params.n_threads) != 0) {
+				log("%s: failed to compute log mel spectrogram\n", __func__);
+				return -1;
+			}
         } else {
             if (whisper_pcm_to_mel_with_state(ctx, state, samples, n_samples, params.n_threads) != 0) {
                 WHISPER_LOG_ERROR("%s: failed to compute log mel spectrogram\n", __func__);
