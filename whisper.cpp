@@ -4970,7 +4970,7 @@ int whisper_full_with_state(
         // compute log mel spectrogram
         if (params.speed_up) {
             if (whisper_pcm_to_mel_phase_vocoder_with_state(ctx, state, samples, n_samples, params.n_threads) != 0) {
-				log("%s: failed to compute log mel spectrogram\n", __func__);
+				WHISPER_LOG_ERROR("%s: failed to compute log mel spectrogram\n", __func__);
 				return -1;
 			}
         } else {
